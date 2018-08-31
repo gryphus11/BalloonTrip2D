@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class CGameOverManager : MonoBehaviour
 {
-    public Text _bestScoreText;
+    public Text bestScoreText = null;
+
     // Use this for initialization
     void Start()
     {
-        _bestScoreText.text = PlayerPrefs.GetString("HIGH_SCORE", "0");
+        bestScoreText.text = PlayerPrefs.GetString("HIGH_SCORE", "0");
 
     }
 
@@ -22,7 +23,7 @@ public class CGameOverManager : MonoBehaviour
 
     public void OnReStartButtonClick()
     {
-        CGameManager.IsGameStop = false;
+        CGameManager.isGameStop = false;
         SceneManager.LoadScene("Game");
     }
 }

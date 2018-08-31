@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CSkyCollision : MonoBehaviour {
 
-    public CInputMove _player;
+    public CInputMove playerInputMove;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -18,8 +19,8 @@ public class CSkyCollision : MonoBehaviour {
     {
         if (collision.tag == "Player")
         {
-            CGameManager.IsGameStop = true;
-            _player.GameOver();
+            CGameManager.isGameStop = true;
+            playerInputMove.GameOver();
         }
 
         Destroy(collision.gameObject);

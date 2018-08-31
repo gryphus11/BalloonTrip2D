@@ -4,35 +4,30 @@ using UnityEngine;
 
 public class CGenerate : MonoBehaviour
 {
+    public float startDelayTime = 0.0f;
+    public float generateDelayTime = 0.0f;
+    public Transform generatePosition = null;
+    public float topGenerateRange = 0.0f;
+    public float bottomGenerateRange = 0.0f;
+    public GameObject generateObject = null;
 
-    public float _startDelayTime;
-
-    public float _generateDelayTime;
-
-    public Transform _generatePosition;
-
-    public float _topGenerateRange;
-
-    public float _bottomGenerateRange;
-
-    public GameObject _generateObject;
     // Use this for initialization
     void Start()
     {
-        InvokeRepeating("CreateObject", _startDelayTime, _generateDelayTime);
+        InvokeRepeating("CreateObject", startDelayTime, generateDelayTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (CGameManager.IsGameStop)
+        if (CGameManager.isGameStop)
             CancelInvoke();
     }
 
     private void CreateObject()
     {
-        Vector2 genPos = new Vector2(_generatePosition.position.x,
-            _generatePosition.position.y + (Random.Range(_bottomGenerateRange, _topGenerateRange)));
-        Instantiate(_generateObject, genPos, Quaternion.identity);
+        Vector2 genPos = new Vector2(generatePosition.position.x,
+            generatePosition.position.y + (Random.Range(bottomGenerateRange, topGenerateRange)));
+        Instantiate(generateObject, genPos, Quaternion.identity);
     }
 }

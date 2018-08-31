@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class CGameManager : MonoBehaviour
 {
-    public static bool IsGameStop = false;
-    public Animator _backGroundAnimator;
-    public Text _balloonCountText;
+    public static bool isGameStop = false;
+    public Animator backGroundAnimator = null;
+    public Text balloonCountText = null;
+
     // Use this for initialization
     void Start()
     {
@@ -19,17 +20,17 @@ public class CGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsGameStop)
-            _backGroundAnimator.speed = 0.0f;
+        if (isGameStop)
+            backGroundAnimator.speed = 0.0f;
     }
 
     public void ScoreUp()
     {
-        int balloonCount = int.Parse(_balloonCountText.text);
+        int balloonCount = int.Parse(balloonCountText.text);
 
         ++balloonCount;
 
-        _balloonCountText.text = balloonCount.ToString();
+        balloonCountText.text = balloonCount.ToString();
 
         HighScoreSave();
     }
@@ -37,7 +38,7 @@ public class CGameManager : MonoBehaviour
     private void HighScoreSave()
     {
         string highScoreText = PlayerPrefs.GetString("HIGH_SCORE", "0");
-        string currentScoreText = _balloonCountText.text;
+        string currentScoreText = balloonCountText.text;
 
         int highScore = int.Parse(highScoreText);
         int currentScore = int.Parse(currentScoreText);

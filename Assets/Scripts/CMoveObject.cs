@@ -2,22 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody2D))]
 public class CMoveObject : MonoBehaviour
 {
+    public float speed = 0.0f;
+    public Vector2 direction = Vector2.zero;
 
-    public float _speed;
-    public Vector2 _direction;
-    public Rigidbody2D _rigidbody2d;
+    protected Rigidbody2D _rigidbody2d = null;
+
+    protected virtual void Awake()
+    {
+        _rigidbody2d = GetComponent<Rigidbody2D>();
+    }
+
     // Use this for initialization
     protected virtual void Start()
     {
-        _rigidbody2d.velocity = _direction.normalized * _speed;
+        _rigidbody2d.velocity = direction.normalized * speed;
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (CGameManager.IsGameStop)
+        if (CGameManager.isGameStop)
             _rigidbody2d.velocity = Vector2.zero;
     }
 }

@@ -6,7 +6,7 @@ public class CEnemyShot : CShot {
     
 	// Use this for initialization
 	void Start () {
-        InvokeRepeating("CreateShot", _shotStartTime, _shotDelayTime);
+        InvokeRepeating("CreateShot", shotStartTime, shotDelayTime);
 	}
 	
 	// Update is called once per frame

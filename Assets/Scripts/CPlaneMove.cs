@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class CPlaneMove : CMoveObject
 {
-    public float _speedMinRange;
-    public float _speedMaxRange;
-    private Transform _playerPosition;
-    public float _gravityMinRange;
-    public float _gravityMaxRange;
-    public float _randomGravityStartTime;
-    public float _randomGravityDelayTime;
-    public GameObject _burstEffect;
+    public float speedMinRange = 0.0f;
+    public float speedMaxRange = 0.0f;
+    public float gravityMinRange = 0.0f;
+    public float gravityMaxRange = 0.0f;
+    public float randomGravityStartTime = 0.0f;
+    public float randomGravityDelayTime = 0.0f;
+    public GameObject _burstEffect = null;
+
+    private Transform _playerPosition = null;
+
     // Use this for initialization
     protected override void Start()
     {
         _playerPosition = GameObject.Find("BalloonMan").GetComponent<Transform>();
-        _speed = Random.Range(_speedMinRange, _speedMaxRange);
-        _direction = _playerPosition.position - transform.position;
-        _rigidbody2d.velocity = _direction.normalized * _speed;
-        InvokeRepeating("RandomGravity", _randomGravityStartTime, _randomGravityDelayTime);
+        speed = Random.Range(speedMinRange, speedMaxRange);
+        direction = _playerPosition.position - transform.position;
+        _rigidbody2d.velocity = direction.normalized * speed;
+        InvokeRepeating("RandomGravity", randomGravityStartTime, randomGravityDelayTime);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        if (CGameManager.IsGameStop)
+        if (CGameManager.isGameStop)
         {
             CancelInvoke();
             Invoke("PlaneStop", 3.0f);
@@ -34,7 +36,7 @@ public class CPlaneMove : CMoveObject
 
     void RandomGravity()
     {
-        _rigidbody2d.gravityScale = Random.Range(_gravityMinRange, _gravityMaxRange);
+        _rigidbody2d.gravityScale = Random.Range(gravityMinRange, gravityMaxRange);
     }
 
     void PlaneStop()

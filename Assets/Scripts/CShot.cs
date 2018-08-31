@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CShot : MonoBehaviour {
-    public Transform[] _genPositions;
-    public GameObject _shotPrefab;
-    public float _shotStartTime;
-    public float _shotDelayTime;
+
+    public Transform[] genPositions = null;
+    public GameObject shotPrefab = null;
+    public float shotStartTime = 0.0f;
+    public float shotDelayTime = 0.0f;
     
     // Use this for initialization
     void Start () {
@@ -20,9 +21,9 @@ public class CShot : MonoBehaviour {
 
     protected void CreateShot()
     {
-        for (int i = 0; i < _genPositions.Length; ++i)
+        for (int i = 0; i < genPositions.Length; ++i)
         {
-            Instantiate(_shotPrefab, _genPositions[i].position, _genPositions[i].rotation);
+            Instantiate(shotPrefab, genPositions[i].position, genPositions[i].rotation);
         }
     }
 }
