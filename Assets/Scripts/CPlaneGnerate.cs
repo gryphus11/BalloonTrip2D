@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CPlaneGnerate : MonoBehaviour
 {
-
+    public Transform playerTransform = null;
     public Transform generatePosition = null;
     public float topGenerateRange = 0.0f;
     public float bottomgenerateRange = 0.0f;
@@ -15,6 +15,13 @@ public class CPlaneGnerate : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (playerTransform == null)
+        {
+            Debug.Log("플레이어를 찾을 수 없음.");
+            GameObject playerObject = GameObject.Find("BalloonMan");
+            playerTransform = playerObject == null ? null : playerObject.transform;
+        }
+
         InvokeRepeating("CreatePlane", createStartTime, createDelayTime);
     }
 
@@ -29,6 +36,12 @@ public class CPlaneGnerate : MonoBehaviour
     {
         Vector3 randomPosition = new Vector3(0.0f, Random.Range(bottomgenerateRange, topGenerateRange));
         int prefabsIndex = Random.Range(0, planePrefabs.Length);
-        Instantiate(planePrefabs[prefabsIndex], generatePosition.position + randomPosition, Quaternion.identity);
+        GameObject newPlane = Instantiate(planePrefabs[prefabsIndex], generatePosition.position + randomPosition, Quaternion.identity);
+        ITargetable targetable = newPlane.GetComponent<ITargetable>();
+        if (targetable != null)
+        {
+            targetable.InitTarget(playerTransform);
+        }
+
     }
 }

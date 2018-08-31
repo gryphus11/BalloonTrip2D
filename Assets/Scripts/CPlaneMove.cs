@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CPlaneMove : CMoveObject
+public class CPlaneMove : CMoveObject, ITargetable
 {
     public float speedMinRange = 0.0f;
     public float speedMaxRange = 0.0f;
@@ -12,14 +12,41 @@ public class CPlaneMove : CMoveObject
     public float randomGravityDelayTime = 0.0f;
     public GameObject _burstEffect = null;
 
+    // 플레이어에 근접하게 다가가는 비행기를 위한 타겟
     private Transform _playerPosition = null;
+
+    public CPlaneMove()
+    {
+
+    }
+
+    public CPlaneMove(Transform playerTransform)
+    {
+        _playerPosition = playerTransform;
+    }
 
     // Use this for initialization
     protected override void Start()
     {
-        _playerPosition = GameObject.Find("BalloonMan").GetComponent<Transform>();
+        if (_playerPosition == null)
+        {
+            Debug.Log("Scene 에서 타겟을 탐색 (Plane)");
+            GameObject playerObject = GameObject.Find("BalloonMan");
+            _playerPosition = playerObject == null ? null : playerObject.transform;
+        }
+
         speed = Random.Range(speedMinRange, speedMaxRange);
-        direction = _playerPosition.position - transform.position;
+
+        if (_playerPosition == null)
+        {
+            direction = Vector2.left;
+        }
+        else
+        {
+            //Debug.Log(_playerPosition.name);
+            direction = _playerPosition.position - transform.position;
+        }
+
         _rigidbody2d.velocity = direction.normalized * speed;
         InvokeRepeating("RandomGravity", randomGravityStartTime, randomGravityDelayTime);
     }
@@ -34,12 +61,17 @@ public class CPlaneMove : CMoveObject
         }
     }
 
-    void RandomGravity()
+    public void InitTarget(Transform playerTransform)
+    {
+        _playerPosition = playerTransform;
+    }
+
+    private void RandomGravity()
     {
         _rigidbody2d.gravityScale = Random.Range(gravityMinRange, gravityMaxRange);
     }
 
-    void PlaneStop()
+    private void PlaneStop()
     {
         _rigidbody2d.velocity = Vector2.zero;
     }

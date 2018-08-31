@@ -19,7 +19,7 @@ public class CShot : MonoBehaviour {
 		
 	}
 
-    protected void CreateShot()
+    protected virtual void CreateShot()
     {
         for (int i = 0; i < genPositions.Length; ++i)
         {

@@ -13,4 +13,17 @@ public class CEnemyShot : CShot {
 	void Update () {
 		
 	}
+
+    protected override void CreateShot()
+    {
+        for (int i = 0; i < genPositions.Length; ++i)
+        {
+            GameObject bullet = Instantiate(shotPrefab, genPositions[i].position, genPositions[i].rotation);
+            ITargetable targetable = bullet.GetComponent<ITargetable>();
+            if (targetable != null)
+            {
+                targetable.InitTarget(CGameManager.playerTransform);
+            }
+        }
+    }
 }

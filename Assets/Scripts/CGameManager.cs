@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class CGameManager : MonoBehaviour
 {
+    public static Transform playerTransform = null;
     public static bool isGameStop = false;
     public Animator backGroundAnimator = null;
     public Text balloonCountText = null;
@@ -14,7 +15,8 @@ public class CGameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        GameObject playerObject = GameObject.Find("BalloonMan");
+        playerTransform = playerObject == null ? null : playerObject.transform;
     }
 
     // Update is called once per frame
@@ -53,5 +55,10 @@ public class CGameManager : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene("GameOver");
+    }
+
+    private void OnDestroy()
+    {
+        playerTransform = null;
     }
 }
