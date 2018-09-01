@@ -20,10 +20,4 @@ public class CGameOverManager : MonoBehaviour
     {
 
     }
-
-    public void OnReStartButtonClick()
-    {
-        CGameManager.isGameStop = false;
-        SceneManager.LoadScene("Game");
-    }
 }

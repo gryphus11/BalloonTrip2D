@@ -12,6 +12,10 @@ public class CGameManager : MonoBehaviour
     public Animator backGroundAnimator = null;
     public Text balloonCountText = null;
 
+    private void Awake()
+    {
+        isGameStop = false;
+    }
     // Use this for initialization
     void Start()
     {

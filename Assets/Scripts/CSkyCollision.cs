@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CSkyCollision : MonoBehaviour {
 
-    public CInputMove playerInputMove;
-
 	// Use this for initialization
 	void Start () {
 		
@@ -20,7 +18,15 @@ public class CSkyCollision : MonoBehaviour {
         if (collision.tag == "Player")
         {
             CGameManager.isGameStop = true;
-            playerInputMove.GameOver();
+            CInputMove playerInputMove = collision.transform.GetComponent<CInputMove>();
+            if (playerInputMove != null)
+            {
+                playerInputMove.GameOver();
+            }
+            else
+            {
+                Debug.Log("플레이어 입력 스크립트를 찾을수 없음.");
+            }
         }
 
         Destroy(collision.gameObject);
